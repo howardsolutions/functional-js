@@ -28,11 +28,22 @@ function constant(x) {
 }
 
 const ten = constant(10);
-// ten() => return 10
+// console.log(ten()); => 10
 
-// 5) 
-function addn(fns) {
-    
+// 5)
+function addn(...fns) {
+  while (fns.length > 2) {
+    let [fn0, fn1, ...rest] = fns;
+    fns = [
+      function f() {
+        return add2(fn0, fn1);
+      },
+      ...rest,
+    ];
+  }
+
+  return add2(fns[0], fns[1]);
 }
 
-// addn(constant(3), constant(7),...)
+const res = addn(constant(3), constant(7), ten, six);
+console.log(res);
